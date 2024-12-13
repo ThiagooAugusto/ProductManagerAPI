@@ -27,5 +27,15 @@ namespace ProductManagerAPI.Repositories
         {
             await _context.SaveChangesAsync();
         }
+        public TRepository GetRepository<TRepository>() where TRepository : class
+        {
+            if (typeof(TRepository) == typeof(IProdutoRepository))
+                return ProdutoRepository as TRepository;
+
+            if (typeof(TRepository) == typeof(ICategoriaRepository))
+                return CategoriaRepository as TRepository;
+
+            throw new InvalidOperationException("Repositório não suportado.");
+        }
     }
 }

@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using ProductManagerAPI.Context;
 using ProductManagerAPI.Repositories;
 using ProductManagerAPI.Repositories.Interfaces;
+using ProductManagerAPI.Services;
+using ProductManagerAPI.Services.Interfaces;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,6 +20,9 @@ builder.Services.AddScoped<ICategoriaRepository,ICategoriaRepository>();
 builder.Services.AddScoped<IProdutoRepository,IProdutoRepository>();
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<IProdutoService,ProdutoService>();
+builder.Services.AddScoped<ICategoriaService, CategoriaService>();
+
 
 var app = builder.Build();
 
