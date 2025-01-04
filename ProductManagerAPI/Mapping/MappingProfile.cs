@@ -13,6 +13,7 @@ namespace ProductManagerAPI.Mapping
             CreateMap<Produto, ProdutoUpdateEstoqueRequestDTO>().ReverseMap();
             CreateMap<Categoria, CategoriaResponseDTO>().ReverseMap();
             CreateMap<Categoria, CategoriaCreateDTO>().ReverseMap();
+            CreateMap<Categoria, CategoriaDTO>().ReverseMap();
         }
     }
 }

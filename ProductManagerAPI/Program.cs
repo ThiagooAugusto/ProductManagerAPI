@@ -17,8 +17,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
-builder.Services.AddScoped<ICategoriaRepository,ICategoriaRepository>();
-builder.Services.AddScoped<IProdutoRepository,IProdutoRepository>();
+builder.Services.AddScoped<ICategoriaRepository,CategoriaRepository>();
+builder.Services.AddScoped<IProdutoRepository,ProdutoRepository>();
 builder.Services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<IProdutoService,ProdutoService>();

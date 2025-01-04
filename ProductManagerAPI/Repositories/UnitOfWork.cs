@@ -1,4 +1,5 @@
 ﻿using ProductManagerAPI.Context;
+using ProductManagerAPI.Models;
 using ProductManagerAPI.Repositories.Interfaces;
 
 namespace ProductManagerAPI.Repositories
@@ -29,10 +30,10 @@ namespace ProductManagerAPI.Repositories
         }
         public TRepository GetRepository<TRepository>() where TRepository : class
         {
-            if (typeof(TRepository) == typeof(IProdutoRepository))
+            if (typeof(TRepository) == typeof(IBaseRepository<Produto>))
                 return ProdutoRepository as TRepository;
 
-            if (typeof(TRepository) == typeof(ICategoriaRepository))
+            if (typeof(TRepository) == typeof(IBaseRepository<Categoria>))
                 return CategoriaRepository as TRepository;
 
             throw new InvalidOperationException("Repositório não suportado.");
