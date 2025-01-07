@@ -9,8 +9,11 @@ namespace ProductManagerAPI.Mapping
         public MappingProfile() {
             CreateMap<Produto, ProdutoCreateDTO>().ReverseMap();
             CreateMap<Produto,ProdutoResponseDTO>().ReverseMap();
+            CreateMap<Produto, ProdutoUpdateDTO>().ReverseMap();
+            CreateMap<Produto, ProdutoEstoqueDTO>().ReverseMap();
             CreateMap<Produto, ProdutoUpdateEstoqueResponseDTO>().ReverseMap();
             CreateMap<Produto, ProdutoUpdateEstoqueRequestDTO>().ReverseMap();
+
             CreateMap<Categoria, CategoriaResponseDTO>().ReverseMap();
             CreateMap<Categoria, CategoriaCreateDTO>().ReverseMap();
             CreateMap<Categoria, CategoriaDTO>().ReverseMap();

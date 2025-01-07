@@ -19,5 +19,8 @@ namespace ProductManagerAPI.DTOs
         [Range(0,9999,ErrorMessage ="Insira valores entre 0 e 9999!")]
         public decimal Preco { get; set; }
 
+        [Required]
+        public int CategoriaId {  get; set; }
+
     }
 }

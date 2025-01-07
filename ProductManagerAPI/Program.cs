@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ProductManagerAPI.Context;
 using ProductManagerAPI.Mapping;
@@ -5,13 +7,20 @@ using ProductManagerAPI.Repositories;
 using ProductManagerAPI.Repositories.Interfaces;
 using ProductManagerAPI.Services;
 using ProductManagerAPI.Services.Interfaces;
+using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
+using System.Text.Json.Serialization;
+using System.Text;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddControllers().AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+}).AddNewtonsoftJson();
 
-builder.Services.AddControllers();
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
