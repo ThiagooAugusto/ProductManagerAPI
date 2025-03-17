@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using System.Text.Json.Serialization;
 using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -35,6 +36,7 @@ namespace ProductManagerAPI.Controllers
         }
 
         // GET api/<ProdutosController>/5
+        [Authorize]
         [HttpGet("{id}",Name ="ObterProduto")]
         public async Task<ActionResult<ProdutoResponseDTO>> Get(int id)
         {
@@ -46,6 +48,7 @@ namespace ProductManagerAPI.Controllers
             return Ok(_mapper.Map<ProdutoResponseDTO>(produto));
         }
 
+        [Authorize]
         [HttpGet("EmEstoque")]
         public async Task<ActionResult<IEnumerable<ProdutoEstoqueDTO>>> GetProdutosEmEstoque()
         {
@@ -57,6 +60,7 @@ namespace ProductManagerAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<ProdutoResponseDTO>>(produtos));
         }
 
+        [Authorize]
         [HttpGet("categorias/{id}")]
         public async Task<ActionResult<IEnumerable<ProdutoResponseDTO>>> GetProdutosPorCategoria(int id)
         {
@@ -71,6 +75,7 @@ namespace ProductManagerAPI.Controllers
 
 
         // POST api/<ProdutosController>
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<ProdutoResponseDTO>> Post([FromBody] ProdutoCreateDTO produtoDTO)
         {
@@ -84,6 +89,7 @@ namespace ProductManagerAPI.Controllers
         }
 
         // PUT api/<ProdutosController>/5
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<ProdutoResponseDTO>> Put(int id, [FromBody] ProdutoUpdateDTO produtoDTO)
         {
@@ -97,6 +103,8 @@ namespace ProductManagerAPI.Controllers
             return Ok(_mapper.Map<ProdutoResponseDTO>(produtoAtualizado));
         }
 
+        [Authorize(Policy ="Administrador")]
+        [Authorize(Policy ="Funcionario")]
         [HttpPatch("{id}/UpdateEstoque")]
         public async Task<ActionResult<ProdutoUpdateEstoqueResponseDTO>> Patch(int id , [FromBody] JsonPatchDocument<ProdutoUpdateEstoqueRequestDTO> patchProdutoDTO)
         {
@@ -128,6 +136,7 @@ namespace ProductManagerAPI.Controllers
 
 
         // DELETE api/<ProdutosController>/5
+        [Authorize(Policy ="Administrador")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<ProdutoResponseDTO>> Delete(int id)
         {

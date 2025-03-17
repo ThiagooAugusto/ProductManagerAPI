@@ -4,7 +4,7 @@ using ProductManagerAPI.Models;
 
 namespace ProductManagerAPI.Context
 {
-    public class AppDbContext : IdentityDbContext<AplicationUser>
+    public class AppDbContext : IdentityDbContext<ApplicationUser>
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {

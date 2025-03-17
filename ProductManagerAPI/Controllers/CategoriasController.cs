@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductManagerAPI.DTOs;
 using ProductManagerAPI.Models;
@@ -34,6 +35,7 @@ namespace ProductManagerAPI.Controllers
         }
 
         // GET api/<CategoriasController>/5
+        [Authorize]
         [HttpGet("{id}",Name="ObterProdutoPorId")]
         public async Task<ActionResult<CategoriaResponseDTO>> Get(int id)
         {
@@ -46,6 +48,7 @@ namespace ProductManagerAPI.Controllers
         }
 
         // POST api/<CategoriasController>
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<CategoriaResponseDTO>> Post([FromBody] CategoriaCreateDTO categoriaDTO)
         {
@@ -57,6 +60,7 @@ namespace ProductManagerAPI.Controllers
         }
 
         // PUT api/<CategoriasController>/5
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<CategoriaResponseDTO>> Put(int id, [FromBody] CategoriaDTO categoriaDTO)
         {
@@ -71,6 +75,7 @@ namespace ProductManagerAPI.Controllers
         }
 
         // DELETE api/<CategoriasController>/5
+        [Authorize(Policy ="Administrador")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<CategoriaResponseDTO>> Delete(int id)
         {
