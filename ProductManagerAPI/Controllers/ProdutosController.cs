@@ -8,13 +8,16 @@ using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using System.Text.Json.Serialization;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.RateLimiting;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ProductManagerAPI.Controllers
 {
+   
     [Route("api/[controller]")]
     [ApiController]
+    [EnableRateLimiting("fixedWindow")]
     public class ProdutosController : ControllerBase
     {
         private readonly IProdutoService _produtoService;
@@ -37,6 +40,7 @@ namespace ProductManagerAPI.Controllers
 
         // GET api/<ProdutosController>/5
         [Authorize]
+        [DisableRateLimiting]
         [HttpGet("{id}",Name ="ObterProduto")]
         public async Task<ActionResult<ProdutoResponseDTO>> Get(int id)
         {
