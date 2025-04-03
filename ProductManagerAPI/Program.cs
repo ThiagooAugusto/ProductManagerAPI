@@ -17,6 +17,7 @@ using ProductManagerAPI.Models;
 using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.RateLimiting;
+using Asp.Versioning;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -125,6 +126,19 @@ builder.Services.AddAuthorization(options =>
 }
 
 );
+
+builder.Services.AddApiVersioning(versioningOptions =>
+{
+    versioningOptions.DefaultApiVersion = new Asp.Versioning.ApiVersion(1, 0);
+    versioningOptions.AssumeDefaultVersionWhenUnspecified = true;
+    versioningOptions.ReportApiVersions = true;
+    versioningOptions.ApiVersionReader = ApiVersionReader.Combine(new QueryStringApiVersionReader(), new UrlSegmentApiVersionReader());
+}
+).AddApiExplorer(o =>
+{
+    o.GroupNameFormat = "'v'VVV";
+    o.SubstituteApiVersionInUrl = true;
+});
 
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));

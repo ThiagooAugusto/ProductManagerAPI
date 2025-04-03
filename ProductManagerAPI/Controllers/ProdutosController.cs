@@ -9,13 +9,15 @@ using System.Text.Json.Serialization;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.RateLimiting;
+using Asp.Versioning;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace ProductManagerAPI.Controllers
 {
-   
-    [Route("api/[controller]")]
+
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [EnableRateLimiting("fixedWindow")]
     public class ProdutosController : ControllerBase

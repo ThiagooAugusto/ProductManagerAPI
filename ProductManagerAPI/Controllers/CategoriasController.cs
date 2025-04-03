@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Asp.Versioning;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProductManagerAPI.DTOs;
@@ -10,7 +11,10 @@ using ProductManagerAPI.Services.Interfaces;
 
 namespace ProductManagerAPI.Controllers
 {
-    [Route("api/[controller]")]
+
+    
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class CategoriasController : ControllerBase
     {

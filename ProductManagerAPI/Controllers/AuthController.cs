@@ -8,10 +8,12 @@ using ProductManagerAPI.Models;
 using ProductManagerAPI.Services;
 using ProductManagerAPI.DTOs;
 using Azure;
+using Asp.Versioning;
 
 namespace ProductManagerAPI.Controllers
 {
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
