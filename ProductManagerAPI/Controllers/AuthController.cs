@@ -38,6 +38,13 @@ namespace ProductManagerAPI.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Cria uma role
+        /// </summary>
+        /// <param name="role"></param>
+        /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [Authorize(Policy = "SuperAdministrador")]
         [HttpPost]
         [Route("create-role")]
@@ -70,6 +77,14 @@ namespace ProductManagerAPI.Controllers
                              );      
         }
 
+        /// <summary>
+        /// Adiciona um usuário a uma role
+        /// </summary>
+        /// <param name="email"></param>
+        /// <param name="roleName"></param>
+        /// <returns></returns>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Policy = "SuperAdministrador")]
         [HttpPost]
         [Route("AddUserToRole")]
@@ -104,6 +119,13 @@ namespace ProductManagerAPI.Controllers
             return BadRequest(new { error = "Unable to find user" });
         }
 
+        /// <summary>
+        /// Checa as credenciais e realiza o login
+        /// </summary>
+        /// <param name="loginDTO"></param>
+        /// <returns>O objeto token jwt</returns>
+        [ProducesResponseType(StatusCodes.Status403Forbidden)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login([FromBody] LoginDTO loginDTO)
@@ -151,6 +173,8 @@ namespace ProductManagerAPI.Controllers
             //return Forbid();
         }
 
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpPost]
         [Route("register")]
         public async Task<IActionResult> Register([FromBody] RegisterDTO registerDTO)
@@ -180,7 +204,14 @@ namespace ProductManagerAPI.Controllers
             return Ok(new { Status = "Success", Message = "User created successfully!" });
         }
 
-
+        /// <summary>
+        /// Gera o refresh token para facilitar o acesso do usuário
+        /// </summary>
+        /// <param name="tokenModel"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ArgumentException"></exception>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [HttpPost]
         [Route("refresh-token")]
         public async Task<IActionResult> RefreshToken(TokenDTO tokenModel)
@@ -232,6 +263,8 @@ namespace ProductManagerAPI.Controllers
             });
         }
 
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [Authorize(Policy = "SuperAdministrador")]
         [HttpPost]
         [Route("revoke/{userName}")]

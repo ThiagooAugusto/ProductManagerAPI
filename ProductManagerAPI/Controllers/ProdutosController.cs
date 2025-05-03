@@ -20,6 +20,7 @@ namespace ProductManagerAPI.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiController]
     [EnableRateLimiting("fixedWindow")]
+    [Produces("application/json")]
     public class ProdutosController : ControllerBase
     {
         private readonly IProdutoService _produtoService;
@@ -32,6 +33,7 @@ namespace ProductManagerAPI.Controllers
         }
 
         // GET: api/<ProdutosController>
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ProdutoResponseDTO>>> GetAll()
         {
@@ -41,6 +43,8 @@ namespace ProductManagerAPI.Controllers
         }
 
         // GET api/<ProdutosController>/5
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [DisableRateLimiting]
         [HttpGet("{id}",Name ="ObterProduto")]
@@ -54,6 +58,12 @@ namespace ProductManagerAPI.Controllers
             return Ok(_mapper.Map<ProdutoResponseDTO>(produto));
         }
 
+        ///<summary>
+        /// Busca os produtos em estoque
+        ///</summary>
+        ///<returns>Uma lista de objetos produto</returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [HttpGet("EmEstoque")]
         public async Task<ActionResult<IEnumerable<ProdutoEstoqueDTO>>> GetProdutosEmEstoque()
@@ -66,6 +76,11 @@ namespace ProductManagerAPI.Controllers
             return Ok(_mapper.Map<IEnumerable<ProdutoResponseDTO>>(produtos));
         }
 
+        ///<summary>Busca produtos por uma categoria específica</summary>
+        ///<param name="id"></param>
+        ///<returns>Retorna uma lista de objetos produto</returns>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [HttpGet("categorias/{id}")]
         public async Task<ActionResult<IEnumerable<ProdutoResponseDTO>>> GetProdutosPorCategoria(int id)
@@ -81,6 +96,7 @@ namespace ProductManagerAPI.Controllers
 
 
         // POST api/<ProdutosController>
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<ProdutoResponseDTO>> Post([FromBody] ProdutoCreateDTO produtoDTO)
@@ -94,7 +110,10 @@ namespace ProductManagerAPI.Controllers
             return new CreatedAtRouteResult("ObterProduto", new { id = produtoCriado.Id }, result);
         }
 
+
         // PUT api/<ProdutosController>/5
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<ProdutoResponseDTO>> Put(int id, [FromBody] ProdutoUpdateDTO produtoDTO)
@@ -109,6 +128,13 @@ namespace ProductManagerAPI.Controllers
             return Ok(_mapper.Map<ProdutoResponseDTO>(produtoAtualizado));
         }
 
+        ///<summary>Atualiza o estoque de um produto</summary>
+        ///<param name="id"></param>
+        ///<param name="patchProdutoDTO"></param>
+        ///<returns>O objeto produto atualizado</returns>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Policy ="Administrador")]
         [Authorize(Policy ="Funcionario")]
         [HttpPatch("{id}/UpdateEstoque")]
@@ -142,6 +168,8 @@ namespace ProductManagerAPI.Controllers
 
 
         // DELETE api/<ProdutosController>/5
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Policy ="Administrador")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<ProdutoResponseDTO>> Delete(int id)

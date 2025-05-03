@@ -27,6 +27,8 @@ namespace ProductManagerAPI.Controllers
         }
 
         // GET: api/<CategoriasController>
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Categoria>>> GetAll()
         {
@@ -39,6 +41,8 @@ namespace ProductManagerAPI.Controllers
         }
 
         // GET api/<CategoriasController>/5
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [HttpGet("{id}",Name="ObterProdutoPorId")]
         public async Task<ActionResult<CategoriaResponseDTO>> Get(int id)
@@ -52,6 +56,7 @@ namespace ProductManagerAPI.Controllers
         }
 
         // POST api/<CategoriasController>
+        [ProducesResponseType(StatusCodes.Status201Created)]
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<CategoriaResponseDTO>> Post([FromBody] CategoriaCreateDTO categoriaDTO)
@@ -64,6 +69,8 @@ namespace ProductManagerAPI.Controllers
         }
 
         // PUT api/<CategoriasController>/5
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize]
         [HttpPut("{id}")]
         public async Task<ActionResult<CategoriaResponseDTO>> Put(int id, [FromBody] CategoriaDTO categoriaDTO)
@@ -79,6 +86,8 @@ namespace ProductManagerAPI.Controllers
         }
 
         // DELETE api/<CategoriasController>/5
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         [Authorize(Policy ="Administrador")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<CategoriaResponseDTO>> Delete(int id)
@@ -86,7 +95,7 @@ namespace ProductManagerAPI.Controllers
             var categoria = await _categoriaService.GetAsync(c=>c.Id == id);
 
             if (categoria == null)
-                return BadRequest();
+                return NotFound();
 
             await _categoriaService.DeleteAsync(categoria);
 

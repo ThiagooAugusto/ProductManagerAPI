@@ -18,6 +18,7 @@ using Microsoft.OpenApi.Models;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.RateLimiting;
 using Asp.Versioning;
+using System.Reflection;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,7 +44,27 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "ProductManagerAPI", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
+        Version = "v1",
+        Title = "ProductManagerAPI",
+        Description = "Catálogo de Produtos e Categorias",
+        //TermsOfService = new Uri(""),
+        Contact = new OpenApiContact
+        {
+            Name = "Thiago",
+            Email = "taugusto@gmail.com",
+            Url = new Uri("https://www.linkedin.com/in/thiago-augusto-109a48253/"),
+        },
+        License = new OpenApiLicense
+        {
+            Name = "MIT",
+            Url = new Uri("https://opensource.org/licenses/MIT")
+        }
+    });
+
+    var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));//inclui comentarios xml na documentação do swagger
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
