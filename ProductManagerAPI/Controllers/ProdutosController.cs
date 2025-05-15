@@ -96,11 +96,15 @@ namespace ProductManagerAPI.Controllers
 
 
         // POST api/<ProdutosController>
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [Authorize]
         [HttpPost]
         public async Task<ActionResult<ProdutoResponseDTO>> Post([FromBody] ProdutoCreateDTO produtoDTO)
         {
+            if (produtoDTO == null)
+                return BadRequest();
+
             var produtoEntity = _mapper.Map<Produto>(produtoDTO);
 
             var produtoCriado = await _produtoService.CreateAsync(produtoEntity);
