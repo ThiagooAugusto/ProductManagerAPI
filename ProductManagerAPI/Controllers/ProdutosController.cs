@@ -139,7 +139,7 @@ namespace ProductManagerAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize(Policy ="Funcionario")]
+        [Authorize(Policy ="AdminOuFunc")]
         [HttpPatch("{id}/UpdateEstoque")]
         public async Task<ActionResult<ProdutoUpdateEstoqueResponseDTO>> Patch(int id , [FromBody] JsonPatchDocument<ProdutoUpdateEstoqueRequestDTO> patchProdutoDTO)
         {

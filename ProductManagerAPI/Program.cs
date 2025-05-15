@@ -48,7 +48,7 @@ builder.Services.AddSwaggerGen(c =>
     {
         Version = "v1",
         Title = "ProductManagerAPI",
-        Description = "Catálogo de Produtos e Categorias",
+        Description = "Catï¿½logo de Produtos e Categorias",
         //TermsOfService = new Uri(""),
         Contact = new OpenApiContact
         {
@@ -64,7 +64,7 @@ builder.Services.AddSwaggerGen(c =>
     });
 
     var xmlFileName = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));//inclui comentarios xml na documentação do swagger
+    c.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, xmlFileName));//inclui comentarios xml na documentaï¿½ï¿½o do swagger
 
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme()
     {
@@ -143,6 +143,9 @@ builder.Services.AddAuthorization(options =>
     options.AddPolicy("SuperAdministrador", policy =>
                      policy.RequireRole("SuperAdministrador"));
     options.AddPolicy("Funcionario", policy => policy.RequireRole("Funcionario"));
+    options.AddPolicy("AdminOuFunc", policy =>
+        policy.RequireAssertion(context =>
+            context.User.IsInRole("Administrador") || context.User.IsInRole("Funcionario")));
     options.AddPolicy("Usuario", policy => policy.RequireRole("Usuario"));
 }
 
