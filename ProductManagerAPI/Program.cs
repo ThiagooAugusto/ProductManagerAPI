@@ -141,7 +141,7 @@ builder.Services.AddAuthorization(options =>
 {
     options.AddPolicy("Administrador", policy => policy.RequireRole("Administrador"));
     options.AddPolicy("SuperAdministrador", policy =>
-                     policy.RequireRole("Administrador").RequireClaim("id", "ThiagoSilva"));
+                     policy.RequireRole("SuperAdministrador"));
     options.AddPolicy("Funcionario", policy => policy.RequireRole("Funcionario"));
     options.AddPolicy("Usuario", policy => policy.RequireRole("Usuario"));
 }

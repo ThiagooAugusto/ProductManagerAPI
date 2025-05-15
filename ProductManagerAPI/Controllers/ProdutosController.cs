@@ -73,7 +73,7 @@ namespace ProductManagerAPI.Controllers
             if (produtos == null)
                 return NotFound("Produtos não encontrados!");
 
-            return Ok(_mapper.Map<IEnumerable<ProdutoResponseDTO>>(produtos));
+            return Ok(_mapper.Map<IEnumerable<ProdutoEstoqueDTO>>(produtos));
         }
 
         ///<summary>Busca produtos por uma categoria específica</summary>
@@ -139,7 +139,6 @@ namespace ProductManagerAPI.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        [Authorize(Policy ="Administrador")]
         [Authorize(Policy ="Funcionario")]
         [HttpPatch("{id}/UpdateEstoque")]
         public async Task<ActionResult<ProdutoUpdateEstoqueResponseDTO>> Patch(int id , [FromBody] JsonPatchDocument<ProdutoUpdateEstoqueRequestDTO> patchProdutoDTO)
