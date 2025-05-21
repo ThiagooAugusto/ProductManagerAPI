@@ -13,8 +13,8 @@ Api Rest para gerenciamento de um catálogo de produtos.
 * Autenticação com JWT
 * Autorização com políticas do Asp .net core
 * Validação de dados
-* Clean Architecture
 * Testes unitários
+* Padrões de projeto
 
 ## Execução e exemplo 
 
